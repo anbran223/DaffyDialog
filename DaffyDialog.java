@@ -28,9 +28,16 @@ import android.widget.NumberPicker;
 import android.text.method.HideReturnsTransformationMethod;
 
 import android.text.method.PasswordTransformationMethod;
+import com.google.appinventor.components.runtime.util.MediaUtil;
+import com.google.appinventor.components.runtime.PermissionResultHandler;
+import android.graphics.BitmapFactory;
+import android.widget.ImageView;
+import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.BitmapDrawable;
 
 @DesignerComponent(
-        version = 3,
+        version = 4,
         description = "A non-visible extension that provides additional tools to the built-in Notifier component.<br><br>Made by Gordon Lu (AICODE).",
         category = ComponentCategory.EXTENSION,
         nonVisible = true,
@@ -59,10 +66,11 @@ public class DaffyDialog extends AndroidNonvisibleComponent {
     " in which the user will first see in the textbox when they open the dialog, and hint is the hint of that textbox." + 
     " Use inputBold, inputItalic, hintColor and inputColor to customize the textbpx, and use the property blocks to specify inputFont." + 
     " buttonText is the text of the OK button, while cancelButtonText is the text of the cancel button.") 
-    public void ShowTextInputDialog(final int id, String title, String defaultText, String hint, boolean inputBold, boolean inputItalic, String inputFont,
-    int hintColor, int inputColor, String buttonText, String cancelButtonText, boolean cancelable, int inputType) {
+    public void ShowTextInputDialog(final int id, String title, String message, String defaultText, String hint, boolean inputBold, boolean inputItalic, String inputFont,
+    int hintColor, int inputColor, String buttonText, String cancelButtonText, String iconPath, boolean cancelable, int inputType) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this.context);
         builder.setTitle(title);
+        builder.setMessage(message);
         builder.setCancelable(false);
         final EditText edit = new EditText(this.context);
         Typeface t = Typeface.DEFAULT;
@@ -91,6 +99,7 @@ public class DaffyDialog extends AndroidNonvisibleComponent {
         edit.setHintTextColor(hintColor);
         edit.setTextColor(inputColor);
         edit.setHint(hint);
+        builder.setIcon(icon(iconPath));
         edit.setInputType(inputType);
         builder.setView(edit);
         builder.setPositiveButton(buttonText, new DialogInterface.OnClickListener() { 
@@ -113,6 +122,25 @@ public class DaffyDialog extends AndroidNonvisibleComponent {
         }
         builder.show();
 }
+    @SimpleFunction(description = "Shows a custom message dialog.")
+    public void CustomMessageDialog(final int id, String title, String message, String iconPath, String buttonText) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this.context);
+        builder.setTitle(title);
+        builder.setCancelable(false);
+        builder.setMessage(message);
+        builder.setIcon(icon(iconPath));
+        builder.setPositiveButton(buttonText, new DialogInterface.OnClickListener() {
+        @Override
+        public void onClick(DialogInterface dialog, int which) {
+        CustomMessageDialogClosed(id);
+        }
+        });
+        builder.show();
+    }
+    @SimpleEvent(description = "This event is fired when the user has pressed the button in a custom message dialog.")
+    public void CustomMessageDialogClosed(int id) {
+        EventDispatcher.dispatchEvent(this, "CustomMessageDialogClosed", id);
+    }
     @SimpleProperty(description = "A font block.")
     public String DefaultFont() {
         return "DEFAULT";
@@ -146,7 +174,7 @@ public class DaffyDialog extends AndroidNonvisibleComponent {
         EventDispatcher.dispatchEvent(this, "NumberPickerDialogCanceled", id);
     }
     @SimpleFunction(description = "Displays a number picker dialog that enables the user to select a number from a predefined range.")
-    public void ShowNumberPickerDialog(final int id, String title, String buttonText, String cancelButtonText, String message, int minValue, int maxValue,
+    public void ShowNumberPickerDialog(final int id, String title, String iconPath, String buttonText, String cancelButtonText, String message, int minValue, int maxValue,
     boolean cancelable) {
         final NumberPicker numberPicker = new NumberPicker(this.context);
         numberPicker.setMaxValue(maxValue);
@@ -156,6 +184,7 @@ public class DaffyDialog extends AndroidNonvisibleComponent {
         builder.setCancelable(false);
         builder.setTitle(title);
         builder.setMessage(message);
+        builder.setIcon(icon(iconPath));
         builder.setPositiveButton(buttonText, new DialogInterface.OnClickListener() {
         @Override
         public void onClick(DialogInterface dialog, int which) {
@@ -172,17 +201,42 @@ public class DaffyDialog extends AndroidNonvisibleComponent {
         }
         builder.show();
 }
+    @SimpleFunction(description = "Displays an image in a dialog. This requires an absolute path pointing to the image location." + 
+    " All supported file types are PNG, JPEG and JPG. After the user has pressed the button, the extension will fire the ImageDialogClosed event.")
+    public void ShowImageDialog(final int id, String title, String message, String imagePath, String buttonText, String iconPath) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this.context);
+        builder.setCancelable(false);
+        builder.setTitle(title);
+        builder.setMessage(message);
+        builder.setIcon(icon(iconPath));
+        final ImageView image = new ImageView(this.context);
+        Bitmap bitmap = BitmapFactory.decodeFile(imagePath);
+        image.setImageBitmap(bitmap);
+        builder.setView(image);
+        builder.setPositiveButton(buttonText, new DialogInterface.OnClickListener() {
+        @Override
+        public void onClick(DialogInterface dialog, int which) {
+        ImageDialogClosed(id);
+        }
+        });
+        builder.show();
+    }
+    @SimpleEvent(description = "This event is fired when the user has pressed the button in an image dialog.")
+    public void ImageDialogClosed(int id) {
+        EventDispatcher.dispatchEvent(this, "ImageDialogClosed", id);
+    }
     @SimpleFunction(description = "Shows a custom choose dialog. The id parameter is an ID to specify the notifier, in case you want to show two dialogs"
     + " with the same extension. The title and message parameter are for specifying the title and message of this dialog respectively. " + 
     " When the user has tapped button1 or button2 in this dialog, the extension fires the GotCustomChooseDialog event. " + 
     "If it is canceled, the extension will call the CustomChooseDialogCanceled event.") 
-    public void CustomChooseDialog(final int id, String message, String title, final String button1Text, final String button2Text, String cancelButtonText, 
+    public void CustomChooseDialog(final int id, String message, String title, String iconPath, final String button1Text, final String button2Text, String cancelButtonText, 
     boolean cancelable) {
         final int ABC = id;
         AlertDialog.Builder builder = new AlertDialog.Builder(this.context);
         builder.setTitle(title);
         builder.setCancelable(false);
         builder.setMessage(message);
+        builder.setIcon(icon(iconPath));
         builder.setPositiveButton(button1Text, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int id) {
@@ -211,7 +265,7 @@ public class DaffyDialog extends AndroidNonvisibleComponent {
     }
     @SimpleEvent(description = "This event is fired when the user has pressed the cancel button in a custom choose dialog.")
     public void CustomChooseDialogCanceled(int id) {
-        EventDispatcher.dispatchEvent(this, "CustomChooseDialogCanceled", id);
+        EventDispatcher.dispatchEvent(this, "CustomChooseDialogCanceled");
     }
     @SimpleEvent(description = "This event is fired when the user has entered a password in a password input dialog.")
     public void GotPasswordInputDialog(int id, String password) {
@@ -226,10 +280,12 @@ public class DaffyDialog extends AndroidNonvisibleComponent {
     " in which the user will first see in the textbox when they open the dialog, and hint is the hint of that textbox." + 
     " Use inputBold, inputItalic, hintColor and inputColor to customize the textbpx, and use the property blocks to specify inputFont." + 
     " buttonText is the text of the OK button, while cancelButtonText is the text of the cancel button.") 
-    public void ShowPasswordInputDialog(final int id, String title, String defaultText, String hint, boolean inputBold, boolean inputItalic, String inputFont,
-    int hintColor, int inputColor, String buttonText, String cancelButtonText, boolean cancelable) {
+    public void ShowPasswordInputDialog(final int id, String title, String message, String defaultText, String hint, boolean inputBold, boolean inputItalic, String inputFont,
+    int hintColor, int inputColor, String buttonText, String cancelButtonText, String iconPath, boolean cancelable) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this.context);
         builder.setTitle(title);
+        builder.setMessage(message);
+        builder.setIcon(icon(iconPath));
         builder.setCancelable(false);
         final EditText edit = new EditText(this.context);
         Typeface t = Typeface.DEFAULT;
@@ -279,5 +335,10 @@ public class DaffyDialog extends AndroidNonvisibleComponent {
 });
         }
         builder.show();
+    }
+    public Drawable icon(String path) {
+        Bitmap bitmap = BitmapFactory.decodeFile(path);
+        Drawable d = new BitmapDrawable(context.getResources(), bitmap);
+        return d;
     }
 }
