@@ -165,7 +165,7 @@ This is the output for the ShowPasswordInputDialog block in **Classic** mode (le
 
 ![image](https://user-images.githubusercontent.com/88015331/160325697-4a1da0a6-e0e5-4ded-90f8-c46ed8ff04ac.png) ![image](https://user-images.githubusercontent.com/88015331/160325702-5b82f4d8-59a3-41ed-9452-64c6d721c732.png)
 
-**:link: External links**
+**🔗 External links**
 
 - https://community.appinventor.mit.edu/t/free-daffydialog-additional-features-for-the-notifier-component/54317?u=gordon_lu
 
