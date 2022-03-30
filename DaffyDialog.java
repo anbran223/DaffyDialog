@@ -35,9 +35,15 @@ import android.widget.ImageView;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.BitmapDrawable;
+import com.google.appinventor.components.common.PropertyTypeConstants;
+
+import android.text.Html;
+import android.text.Spanned;
+
+import android.os.Build;
 
 @DesignerComponent(
-        version = 4,
+        version = 5,
         description = "A non-visible extension that provides additional tools to the built-in Notifier component.<br><br>Made by Gordon Lu (AICODE).",
         category = ComponentCategory.EXTENSION,
         nonVisible = true,
@@ -54,6 +60,7 @@ public class DaffyDialog extends AndroidNonvisibleComponent {
     //Activity and Context
     private final Context context;
     private Activity activity;
+    public boolean html = false;
 
     public DaffyDialog(ComponentContainer container){
         super(container.$form());
@@ -67,10 +74,14 @@ public class DaffyDialog extends AndroidNonvisibleComponent {
     " Use inputBold, inputItalic, hintColor and inputColor to customize the textbpx, and use the property blocks to specify inputFont." + 
     " buttonText is the text of the OK button, while cancelButtonText is the text of the cancel button.") 
     public void ShowTextInputDialog(final int id, String title, String message, String defaultText, String hint, boolean inputBold, boolean inputItalic, String inputFont,
-    int hintColor, int inputColor, String buttonText, String cancelButtonText, String iconPath, boolean cancelable, int inputType) {
+    int hintColor, int inputColor, String buttonText, String cancelButtonText, String iconPath, boolean useIcon, boolean cancelable, int inputType) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this.context);
         builder.setTitle(title);
-        builder.setMessage(message);
+        if (html) {
+            builder.setMessage(getHtml(message));
+        } else {
+            builder.setMessage(message);
+        }
         builder.setCancelable(false);
         final EditText edit = new EditText(this.context);
         Typeface t = Typeface.DEFAULT;
@@ -99,7 +110,9 @@ public class DaffyDialog extends AndroidNonvisibleComponent {
         edit.setHintTextColor(hintColor);
         edit.setTextColor(inputColor);
         edit.setHint(hint);
-        builder.setIcon(icon(iconPath));
+        if (useIcon) {
+            builder.setIcon(icon(iconPath));
+        }
         edit.setInputType(inputType);
         builder.setView(edit);
         builder.setPositiveButton(buttonText, new DialogInterface.OnClickListener() { 
@@ -122,13 +135,29 @@ public class DaffyDialog extends AndroidNonvisibleComponent {
         }
         builder.show();
 }
+    @SimpleProperty(category = PropertyCategory.BEHAVIOR, description = "This property specifies whether HTML format" + 
+    " should be enabled for the message of all dialogs.")
+    public boolean HtmlMessage() {
+        return html;
+    }
+    @DesignerProperty(editorType = PropertyTypeConstants.PROPERTY_TYPE_BOOLEAN, defaultValue = "false")
+    @SimpleProperty (description = "This property specifies whether HTML format should be enabled for the message of all dialogs.")
+    public void HtmlMessage(boolean HTML) {
+        this.html = HTML;
+    }
     @SimpleFunction(description = "Shows a custom message dialog.")
-    public void CustomMessageDialog(final int id, String title, String message, String iconPath, String buttonText) {
+    public void CustomMessageDialog(final int id, String title, String message, String iconPath, boolean useIcon, String buttonText) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this.context);
         builder.setTitle(title);
         builder.setCancelable(false);
-        builder.setMessage(message);
-        builder.setIcon(icon(iconPath));
+        if (html) {
+            builder.setMessage(getHtml(message));
+        } else {
+            builder.setMessage(message);
+        }
+        if (useIcon) {
+            builder.setIcon(icon(iconPath));
+        }
         builder.setPositiveButton(buttonText, new DialogInterface.OnClickListener() {
         @Override
         public void onClick(DialogInterface dialog, int which) {
@@ -174,7 +203,7 @@ public class DaffyDialog extends AndroidNonvisibleComponent {
         EventDispatcher.dispatchEvent(this, "NumberPickerDialogCanceled", id);
     }
     @SimpleFunction(description = "Displays a number picker dialog that enables the user to select a number from a predefined range.")
-    public void ShowNumberPickerDialog(final int id, String title, String iconPath, String buttonText, String cancelButtonText, String message, int minValue, int maxValue,
+    public void ShowNumberPickerDialog(final int id, String title, String iconPath, boolean useIcon, String buttonText, String cancelButtonText, String message, int minValue, int maxValue,
     boolean cancelable) {
         final NumberPicker numberPicker = new NumberPicker(this.context);
         numberPicker.setMaxValue(maxValue);
@@ -183,8 +212,14 @@ public class DaffyDialog extends AndroidNonvisibleComponent {
         builder.setView(numberPicker);    
         builder.setCancelable(false);
         builder.setTitle(title);
-        builder.setMessage(message);
-        builder.setIcon(icon(iconPath));
+        if (html) {
+            builder.setMessage(getHtml(message));
+        } else {
+            builder.setMessage(message);
+        }
+        if (useIcon) {
+            builder.setIcon(icon(iconPath));
+        }
         builder.setPositiveButton(buttonText, new DialogInterface.OnClickListener() {
         @Override
         public void onClick(DialogInterface dialog, int which) {
@@ -203,12 +238,18 @@ public class DaffyDialog extends AndroidNonvisibleComponent {
 }
     @SimpleFunction(description = "Displays an image in a dialog. This requires an absolute path pointing to the image location." + 
     " All supported file types are PNG, JPEG and JPG. After the user has pressed the button, the extension will fire the ImageDialogClosed event.")
-    public void ShowImageDialog(final int id, String title, String message, String imagePath, String buttonText, String iconPath) {
+    public void ShowImageDialog(final int id, String title, String message, String imagePath, String buttonText, String iconPath, boolean useIcon) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this.context);
         builder.setCancelable(false);
         builder.setTitle(title);
-        builder.setMessage(message);
-        builder.setIcon(icon(iconPath));
+        if (html) {
+            builder.setMessage(getHtml(message));
+        } else {
+            builder.setMessage(message);
+        }
+        if (useIcon) {
+            builder.setIcon(icon(iconPath));
+        }
         final ImageView image = new ImageView(this.context);
         Bitmap bitmap = BitmapFactory.decodeFile(imagePath);
         image.setImageBitmap(bitmap);
@@ -229,14 +270,20 @@ public class DaffyDialog extends AndroidNonvisibleComponent {
     + " with the same extension. The title and message parameter are for specifying the title and message of this dialog respectively. " + 
     " When the user has tapped button1 or button2 in this dialog, the extension fires the GotCustomChooseDialog event. " + 
     "If it is canceled, the extension will call the CustomChooseDialogCanceled event.") 
-    public void CustomChooseDialog(final int id, String message, String title, String iconPath, final String button1Text, final String button2Text, String cancelButtonText, 
+    public void CustomChooseDialog(final int id, String message, String title, String iconPath, boolean useIcon, final String button1Text, final String button2Text, String cancelButtonText, 
     boolean cancelable) {
         final int ABC = id;
         AlertDialog.Builder builder = new AlertDialog.Builder(this.context);
         builder.setTitle(title);
         builder.setCancelable(false);
-        builder.setMessage(message);
-        builder.setIcon(icon(iconPath));
+        if (html) {
+            builder.setMessage(getHtml(message));
+        } else {
+            builder.setMessage(message);
+        }
+        if (useIcon) {
+            builder.setIcon(icon(iconPath));
+        }
         builder.setPositiveButton(button1Text, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int id) {
@@ -281,11 +328,17 @@ public class DaffyDialog extends AndroidNonvisibleComponent {
     " Use inputBold, inputItalic, hintColor and inputColor to customize the textbpx, and use the property blocks to specify inputFont." + 
     " buttonText is the text of the OK button, while cancelButtonText is the text of the cancel button.") 
     public void ShowPasswordInputDialog(final int id, String title, String message, String defaultText, String hint, boolean inputBold, boolean inputItalic, String inputFont,
-    int hintColor, int inputColor, String buttonText, String cancelButtonText, String iconPath, boolean cancelable) {
+    int hintColor, int inputColor, String buttonText, String cancelButtonText, String iconPath, boolean useIcon, boolean cancelable) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this.context);
         builder.setTitle(title);
-        builder.setMessage(message);
-        builder.setIcon(icon(iconPath));
+        if (html) {
+            builder.setMessage(getHtml(message));
+        } else {
+            builder.setMessage(message);
+        }
+        if (useIcon) {
+            builder.setIcon(icon(iconPath));
+        }
         builder.setCancelable(false);
         final EditText edit = new EditText(this.context);
         Typeface t = Typeface.DEFAULT;
@@ -340,5 +393,12 @@ public class DaffyDialog extends AndroidNonvisibleComponent {
         Bitmap bitmap = BitmapFactory.decodeFile(path);
         Drawable d = new BitmapDrawable(context.getResources(), bitmap);
         return d;
+    }
+    public Spanned getHtml(String src) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+        return Html.fromHtml(src, Html.FROM_HTML_MODE_COMPACT);
+    } else { 
+        return Html.fromHtml(src);
+    }
     }
 }
