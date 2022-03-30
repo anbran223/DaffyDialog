@@ -27,6 +27,15 @@ An App Inventor non-visible extension that provides additional tools to the buil
 > *Parameters:* id = number (int)
 
 >
+>**CustomMessageDialogClosed**
+>
+>![image](https://user-images.githubusercontent.com/88015331/160748544-9a161bfe-feda-4399-8918-1b515234021c.png)
+>
+>This event is fired when the user has pressed the dismiss button in a custom message dialog.
+>
+>*Parameters:* id = number (int)
+
+>
 > **GotCustomChooseDialog**
 > 
 >![image](https://user-images.githubusercontent.com/88015331/160325472-efa818e1-405e-469d-999b-a8b949f6cba7.png)
@@ -61,6 +70,15 @@ An App Inventor non-visible extension that provides additional tools to the buil
 >This event is fired when the user has pressed the OK button in a text input dialog.
 >
 >*Parameters:* id = number (int), input = text
+
+>
+>**ImageDialogClosed**
+>
+>![image](https://user-images.githubusercontent.com/88015331/160748595-d23faef3-419f-409d-8920-afb9973cd1b1.png)
+>
+>This event is fired when the user has pressed the dismiss button in an image dialog.
+>
+>*Parameters:* id = number (int)
 
 >
 >**NumberPickerDialogCanceled**
