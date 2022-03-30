@@ -173,7 +173,7 @@ Plus, 4 property blocks for fonts.
 
 - https://community.niotron.com/t/f-os-daffydialog-additional-tools-to-the-notifier-component/7975?u=gordon_lu
 
-**+1: Acknowledgements**
+**:+1: Acknowledgements**
 
 My thanks to Salman for his Original Toast extension, which inspired me to make this extension.
 
