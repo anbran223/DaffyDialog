@@ -9,7 +9,7 @@ An App Inventor non-visible extension that provides additional tools to the buil
 
 :package: **Package name:** com.gordonlu.daffydialog
 
-**:clock8: Version:** 3
+**:clock8: Version:** 5
 
 :date: **Release date:** 20:30:00, Asia/Hong_Kong time.
 
@@ -94,44 +94,62 @@ An App Inventor non-visible extension that provides additional tools to the buil
 >
 > **CustomChooseDialog**
 > 
->![image](https://user-images.githubusercontent.com/88015331/160325544-9afaae67-deac-419d-9dc8-827972238ef5.png)
+>![image](https://user-images.githubusercontent.com/88015331/160747821-9c59fead-2a60-443d-8ba8-bf73fb8d33a1.png)
 > 
 > Shows a custom choose dialog. The id parameter is an ID to specify the notifier, in case you want to show two dialogs with the same extension. The title and message parameter are for specifying the title and message of this dialog respectively. When the user has tapped button1 or button2 in this dialog, the extension fires the GotCustomChooseDialog event. If it is canceled, the extension will call the CustomChooseDialogCanceled event.
 > 
-> *Parameters:* id = number (int), message = text, title = text, button1Text = text, button2Text = text, cancelButtonText = text, cancelable = boolean
+> *Parameters:* id = number (int), message = text, title = text, iconPath = text, useIcon = boolean, button1Text = text, button2Text = text, cancelButtonText = text, cancelable = boolean
 
 >
-> **ShowPasswordInputDialog**
-> 
->![image](https://user-images.githubusercontent.com/88015331/160325551-c122f3a2-8a06-4044-9f41-7f207006ece2.png)
-> 
-> Shows a password input dialog. The id parameter is an ID to specify the notifier, in case you want to show two dialogs with the same extension. The title parameter is for specifying the title of this dialog. defaultText is the default text for the input in which the user will first see in the textbox when they open the dialog, and hint is the hint of that textbox. Use inputBold, inputItalic, hintColor and inputColor to customize the textbpx, and use the property blocks to specify inputFont. buttonText is the text of the OK button, while cancelButtonText is the text of the cancel button.
-> 
-> *Parameters:* id = number (int), title = text, defaultText = text, hint = text, inputBold = boolean, inputItalic = boolean, inputFont = text, hintColor = color, inputColor = color, buttonText = text, cancelButtonText = text, cancelable = boolean
+>**CustomMessageDialog**
+>
+>![image](https://user-images.githubusercontent.com/88015331/160748100-38e56516-3bc6-492d-a9c9-59015efbc116.png)
+>
+>Displays a custom message dialog.
+>
+>*Parameters:* id = number (int), title = text, message = text, iconPath = text, useIcon = boolean, buttonText = text
+
+>
+>**ShowImageDialog**
+>
+>![image](https://user-images.githubusercontent.com/88015331/160748136-6d6812f9-dfb2-4801-b4ed-6309de08d8d8.png)
+>
+>Displays an image in a dialog. This requires an absolute path pointing to the image location. All supported file types are PNG, JPEG and JPG. After the user has pressed the button, the extension will fire the ImageDialogClosed event.
+>
+>*Parameters:* id = number (int), title = text, message = text, imagePath = text, buttonText = text, iconPath = text, useIcon = boolean
 
 >
 >**ShowNumberPickerDialog**
 >
->![image](https://user-images.githubusercontent.com/88015331/160325558-5e9e01b8-3e84-4472-862a-3bf59bf96c35.png)
+>![image](https://user-images.githubusercontent.com/88015331/160748157-410e026e-4e6a-4c9e-bfc9-191e39abda2b.png)
 >
 >Displays a number picker dialog that enables the user to select a number from a predefined range.
 >
->*Parameters:* id = number (int), title = text, buttonText = text, cancelButtonText = text, message = text, minValue = number (int), maxValue = number (int), cancelable = boolean
+>*Parameters:* id = number (int), title = text, iconPath = text, useIcon = boolean, buttonText = text, cancelButtonText = text, message = text, minValue = number (int), maxValue = number (int), cancelable = boolean
+
+>
+> **ShowPasswordInputDialog**
+> 
+>![image](https://user-images.githubusercontent.com/88015331/160748220-d8453893-97ab-430e-a73e-c321e69e7c7a.png)
+> 
+> Shows a password input dialog. The id parameter is an ID to specify the notifier, in case you want to show two dialogs with the same extension. The title parameter is for specifying the title of this dialog. defaultText is the default text for the input in which the user will first see in the textbox when they open the dialog, and hint is the hint of that textbox. Use inputBold, inputItalic, hintColor and inputColor to customize the textbpx, and use the property blocks to specify inputFont. buttonText is the text of the OK button, while cancelButtonText is the text of the cancel button.
+> 
+> *Parameters:* id = number (int), title = text, defaultText = text, hint = text, inputBold = boolean, inputItalic = boolean, inputFont = text, hintColor = color, inputColor = color, buttonText = text, cancelButtonText = text, iconPath = text, useIcon = boolean, cancelable = boolean
 
 
 >
 >**ShowTextInputDialog**
 >
->![image](https://user-images.githubusercontent.com/88015331/160325566-0a7d27f5-5ab9-49f5-a112-4792a93a41f6.png)
+>![image](https://user-images.githubusercontent.com/88015331/160748297-25870db9-fd0c-4a5e-b9bd-d619e7c356a8.png)
 >
 >Shows a text input dialog. The id parameter is an ID to specify the notifier, in case you want to show two dialogs with the same extension. The title parameter is for specifying the title of this dialog. defaultText is the default text for the input in which the user will first see in the textbox when they open the dialog, and hint is the hint of that textbox. Use inputBold, inputItalic, hintColor and inputColor to customize the textbpx, and use the property blocks to specify inputFont. buttonText is the text of the OK button, while cancelButtonText is the text of the cancel button.
 >
->*Parameters:* id = number (int), title = text, defaultText = text, hint = text, inputBold = boolean, inputItalic = boolean, inputFont = text, hintColor = color, inputColor = color, buttonText = text, cancelButtonText = text, cancelable = boolean, inputType = number 
+>*Parameters:* id = number (int), title = text, defaultText = text, hint = text, inputBold = boolean, inputItalic = boolean, inputFont = text, hintColor = color, inputColor = color, buttonText = text, cancelButtonText = text, cancelable = boolean, inputType = number, iconPath = text, useIcon = boolean
 (boolean)
 
 For what to fill in in the inputType parameter, here are some examples.
 
-1. plain old normal text - 0.
+1. plain old normal text - 1.
 
 2. number - 2.
 
@@ -148,22 +166,6 @@ https://developer.android.com/reference/android/text/InputType
 Plus, 4 property blocks for fonts.
 
 ![image](https://user-images.githubusercontent.com/88015331/160325578-12701dff-19f2-4d59-aa73-339eaeb8fc99.png)
-
-This is the output for the ShowNumberPickerDialog block in **Classic** mode (left/top) and **Device Default** (right/bottom).
-
-![image](https://user-images.githubusercontent.com/88015331/160325588-50a614f7-a002-44de-9a4f-4d703d8e0cf6.png) ![image](https://user-images.githubusercontent.com/88015331/160325598-082a24b1-1b40-40ae-8756-7813b4accb6c.png)
-
-This is the output for the ShowTextInputDialog block in **Classic** mode (left/top) and **Device Default** (right/bottom).
-
-![image](https://user-images.githubusercontent.com/88015331/160325627-223aace2-78f5-4aa8-a714-9844f9aa6ff3.png) ![image](https://user-images.githubusercontent.com/88015331/160325631-73c6e067-1a00-42ab-b49a-325141d89152.png)
-
-This is the output for the CustomChooseDialog block in **Classic** mode (left/top) and **Device Default** (right/bottom).
-
-![image](https://user-images.githubusercontent.com/88015331/160325660-1ff5c43f-9665-40c8-9daf-3305ac740757.png) ![image](https://user-images.githubusercontent.com/88015331/160325667-8b717c82-b501-4a55-b98b-d17fabcf5ac1.png)
-
-This is the output for the ShowPasswordInputDialog block in **Classic** mode (left/top) and **Device Default** (right/bottom).
-
-![image](https://user-images.githubusercontent.com/88015331/160325697-4a1da0a6-e0e5-4ded-90f8-c46ed8ff04ac.png) ![image](https://user-images.githubusercontent.com/88015331/160325702-5b82f4d8-59a3-41ed-9452-64c6d721c732.png)
 
 **🔗 External links**
 
