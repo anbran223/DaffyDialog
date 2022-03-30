@@ -181,6 +181,21 @@ For more, see the Android Developers documentation.
 
 https://developer.android.com/reference/android/text/InputType
 
+***Property blocks***
+
+>
+>**HtmlMessage** (read, write, designer, blocks)
+>
+>![image](https://user-images.githubusercontent.com/88015331/160748713-debdc293-5b86-4503-a82c-2986e09f4629.png)
+>
+>![image](https://user-images.githubusercontent.com/88015331/160748717-f6ab912c-2cf5-4744-8c55-dc7f2ddde1c6.png)
+>
+>![image](https://user-images.githubusercontent.com/88015331/160748733-ae8a7859-ce17-4a2a-a692-08158afdca80.png)
+>
+>This property specifies whether HTML format should be enabled for the messages of all dialogs in this extension.
+>
+>*Requires:* boolean
+
 Plus, 4 property blocks for fonts.
 
 ![image](https://user-images.githubusercontent.com/88015331/160325578-12701dff-19f2-4d59-aa73-339eaeb8fc99.png)
