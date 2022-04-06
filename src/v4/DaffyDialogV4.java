@@ -43,7 +43,7 @@ import android.text.Spanned;
 import android.os.Build;
 
 @DesignerComponent(
-        version = 5,
+        version = 4,
         description = "A non-visible extension that provides additional tools to the built-in Notifier component.<br><br>Made by Gordon Lu (AICODE).",
         category = ComponentCategory.EXTENSION,
         nonVisible = true,
