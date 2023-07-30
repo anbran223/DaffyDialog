@@ -11,7 +11,7 @@ An App Inventor non-visible extension that provides additional tools to the buil
 
 **:clock8: Version:** 6
 
-:date: **Release date:** 5:
+:date: **Release date:** 4:52PM (UST)
 
 :open_book: **Documentation**
 
