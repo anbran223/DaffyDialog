@@ -7,7 +7,7 @@ An App Inventor non-visible extension that provides additional tools to the buil
 
 - input password dialog!
 
-:package: **Package name:** com.brandonang.daffydialog (now) com.knowme9.daffydialog (future)
+:package: **Package name:** com.brandonang.daffydialog 
 
 **:clock8: Version:** 6
 
