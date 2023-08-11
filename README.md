@@ -211,3 +211,6 @@ Plus, 4 property blocks for fonts.
 My thanks to Salman for his Original Toast extension, which inspired me to make this extension.
 
 https://community.appinventor.mit.edu/t/originaltoast-extension-free-open-source/19695
+
+Credits to Gordon Lu's DaffyDialog 
+(If Gordon Lu is reading this i just want to make the v6 to release advance so i decided to create my own AIX)
