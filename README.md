@@ -9,7 +9,7 @@ An App Inventor non-visible extension that provides additional tools to the buil
 
 :package: **Package name:** com.gordonlu.daffydialog
 
-**:clock8: Version:** 5
+**:clock8: Version:** 6
 
 :date: **Release date:** 20:30:00, Asia/Hong_Kong time.
 
