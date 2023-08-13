@@ -205,6 +205,7 @@ Plus, 4 property blocks for fonts.
 - https://community.appinventor.mit.edu/t/free-daffydialog-additional-features-for-the-notifier-component/54317?u=gordon_lu
 
 - https://community.niotron.com/t/f-os-daffydialog-additional-tools-to-the-notifier-component/7975?u=gordon_lu
+V6 AIX: https://drive.google.com/uc?export=download&id=1RfLTP3RFIIB-vvgdUwvLzBkSBI0K9-5W
 
 **:+1: Acknowledgements**
 
